@@ -107,7 +107,7 @@
 <meta property="og:description" content="这篇笔记主要是记录下http-hash的源码。  http-hash solves the routing problem by making route resolution independent of the order in which routes are defined. It does so by breaking a path into a tree of nodes, based">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/http-hash-source/xmind.png">
-<meta property="og:updated_time" content="2018-03-26T07:14:22.643Z">
+<meta property="og:updated_time" content="2018-03-26T07:22:35.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http-hash source">
 <meta name="twitter:description" content="这篇笔记主要是记录下http-hash的源码。  http-hash solves the routing problem by making route resolution independent of the order in which routes are defined. It does so by breaking a path into a tree of nodes, based">
@@ -425,6 +425,7 @@
 <li>路径的变量名不一致<br>eg: /foo/:vara/ 和 /foo/:varb/ 冲突，因为都能匹配foo.variablePaths, 却有不同的param names。</li>
 <li>A variable route is defined for a splat node<br>当splats和变量路径定义在同一等级上，比如/foo/:var 和 /foo/<em> 这样就会有冲突<br>但如果是静态路径和splat在同一级上就没有问题，eg: /foo/bar 和 /foo/</em>，这种情况下静态路径的优先级高于splat</li>
 </ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/Matt-Esch/http-hash" target="_blank" rel="noopener">http-hash github</a></p>
 
       
     </div>
@@ -461,6 +462,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/26/http-hash-router/" rel="prev" title="http-hash-router">
+                http-hash-router <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -538,7 +543,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -606,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总体结构"><span class="nav-number">1.</span> <span class="nav-text">总体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-hash"><span class="nav-number">2.</span> <span class="nav-text">this._hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-pathname-handler"><span class="nav-number">3.</span> <span class="nav-text">set(pathname, handler)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get-pathname"><span class="nav-number">4.</span> <span class="nav-text">get(pathname)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-Conflicts"><span class="nav-number">5.</span> <span class="nav-text">Path Conflicts</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总体结构"><span class="nav-number">1.</span> <span class="nav-text">总体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-hash"><span class="nav-number">2.</span> <span class="nav-text">this._hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-pathname-handler"><span class="nav-number">3.</span> <span class="nav-text">set(pathname, handler)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get-pathname"><span class="nav-number">4.</span> <span class="nav-text">get(pathname)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-Conflicts"><span class="nav-number">5.</span> <span class="nav-text">Path Conflicts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
