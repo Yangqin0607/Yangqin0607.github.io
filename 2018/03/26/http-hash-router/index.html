@@ -99,17 +99,17 @@
 
 
 
-  <meta name="description" content="Front End Engineer">
+  <meta name="description" content="Server route handler for http-hash 源码123456789101112131415161718192021222324252627282930313233343536373839function HttpHashRouter() &amp;#123;  var hash = HttpHash();  handleRequest.hash = hash;  handleRe">
 <meta property="og:type" content="article">
-<meta property="og:title" content="http-hash-router">
+<meta property="og:title" content="http-hash-router source">
 <meta property="og:url" content="http://yoursite.com/2018/03/26/http-hash-router/index.html">
 <meta property="og:site_name" content="Ailsa&#39;s blog">
-<meta property="og:description" content="Front End Engineer">
+<meta property="og:description" content="Server route handler for http-hash 源码123456789101112131415161718192021222324252627282930313233343536373839function HttpHashRouter() &amp;#123;  var hash = HttpHash();  handleRequest.hash = hash;  handleRe">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-26T07:18:06.647Z">
+<meta property="og:updated_time" content="2018-03-26T08:24:18.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="http-hash-router">
-<meta name="twitter:description" content="Front End Engineer">
+<meta name="twitter:title" content="http-hash-router source">
+<meta name="twitter:description" content="Server route handler for http-hash 源码123456789101112131415161718192021222324252627282930313233343536373839function HttpHashRouter() &amp;#123;  var hash = HttpHash();  handleRequest.hash = hash;  handleRe">
 
 
 
@@ -126,7 +126,7 @@
   };
 </script>
 
-  <title>http-hash-router | Ailsa's blog</title>
+  <title>http-hash-router source | Ailsa's blog</title>
   
 
 
@@ -303,7 +303,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">http-hash-router</h1>
+          <h1 class="post-title" itemprop="name headline">http-hash-router source</h1>
         
 
         <div class="post-meta">
@@ -325,6 +325,24 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/sourcecode/" itemprop="url" rel="index"><span itemprop="name">sourcecode</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -332,7 +350,7 @@
 
           
           
-             <span id="/2018/03/26/http-hash-router/" class="leancloud_visitors" data-flag-title="http-hash-router">
+             <span id="/2018/03/26/http-hash-router/" class="leancloud_visitors" data-flag-title="http-hash-router source">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -363,7 +381,16 @@
       
 
       
-        
+        <p>Server route handler for http-hash</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HttpHashRouter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> hash = HttpHash();</span><br><span class="line"></span><br><span class="line">  handleRequest.hash = hash;</span><br><span class="line">  handleRequest.set = set;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> handleRequest;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">name, handler</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (handler &amp;&amp; <span class="keyword">typeof</span> handler === <span class="string">'object'</span>) &#123;</span><br><span class="line">      handler = httpMethods(handler);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hash.set(name, handler);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleRequest</span>(<span class="params">req, res, opts, cb</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> cb !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> ExpectedCallbackError(&#123;</span><br><span class="line">        value: cb</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> pathname = url.parse(req.url).pathname;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> route = hash.get(pathname);</span><br><span class="line">    <span class="keyword">if</span> (route.handler === <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> cb(NotFoundError(&#123;</span><br><span class="line">        pathname: pathname</span><br><span class="line">      &#125;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    opts = extend(opts, &#123;</span><br><span class="line">      params: route.params,</span><br><span class="line">      splat: route.splat</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> route.handler(req, res, opts, cb);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在httpHashRouter函数中会初始化一个http-hash实例hash，并且将hash绑定在返回的handleRequest函数上,同时还会绑定一个set方法。</p>
+<h2 id="handleRequest-req-res-opts-cb"><a href="#handleRequest-req-res-opts-cb" class="headerlink" title="handleRequest(req, res, opts, cb)"></a>handleRequest(req, res, opts, cb)</h2><p>handleRequest是httpHashRouter返回的函数，接受四个参数，<br>第一二个参数分别为HTTPRequest和HTTPResponse;<br>第三个参数为Options对象;<br>第四个参数为callback，这个函数可能被传入http-hash-router.not-found error，或者是传递给route.handler,省略该参数, 会报http-hash-router.expected-callback异常。</p>
+<p>handleRequest会根据req.url获取pathname,然后利用hash.get(pathname)获取解析后的route对象，根据<strong><a href="/2018/03/25/http-hash-source/">上一篇博文</a></strong>可以知道该对象结构为：<code>{handler, splat, params, src}</code>。如果route.handler为null，表示没有找到与当前路径匹配的路由。如果找到了对应的路由，则将params, splats复制到options参数上，调用route.handler.</p>
+<p>总结：<br>handleRequest函数的作用其实就是从路由树中，找到匹配当前路径的节点，并通知handler。（handler是在hash.set(name, handler)时指定的）。</p>
+<h2 id="set-name-handler"><a href="#set-name-handler" class="headerlink" title="set(name, handler)"></a>set(name, handler)</h2><p>调用set方法，会将传入的路由及其对应的handler存储在路由树中。<br>这里handler可以是函数或者对象，如果使用对象，会利用http-methods模块转为handler函数。<br>set方法实际上是使用的http-hash.set方法，可以通过<strong><a href="/2018/03/25/http-hash-source/">上一篇博文</a></strong>查看。<br>handler在调用时会传入四个参数，handler(req, res, opts, cb).</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> HttpHashRouter = <span class="built_in">require</span>(<span class="string">'http-hash-router'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> router = HttpHashRouter();</span><br><span class="line"></span><br><span class="line">router.set(<span class="string">'/health'</span>, <span class="function"><span class="keyword">function</span> <span class="title">health</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.end(<span class="string">'OK'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span> <span class="title">handler</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  router(req, res, &#123;&#125;, onError);</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">onError</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// use your own custom error serialization.</span></span><br><span class="line">      res.statusCode = err.statusCode || <span class="number">500</span>;</span><br><span class="line">      res.end(err.message);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/Matt-Esch/http-hash-router" target="_blank" rel="noopener">http-hash-router github</a></p>
+
       
     </div>
 
@@ -447,8 +474,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -525,6 +561,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码"><span class="nav-number">1.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#handleRequest-req-res-opts-cb"><span class="nav-number">2.</span> <span class="nav-text">handleRequest(req, res, opts, cb)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-name-handler"><span class="nav-number">3.</span> <span class="nav-text">set(name, handler)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">4.</span> <span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
