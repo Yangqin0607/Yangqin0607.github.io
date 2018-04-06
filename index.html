@@ -286,6 +286,350 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/surviveJS-webpack-developing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/05/surviveJS-webpack-developing/" itemprop="url">surviveJS-webpack-developing学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-05T22:42:07+08:00">2018-04-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/05/surviveJS-webpack-developing/" class="leancloud_visitors" data-flag-title="surviveJS-webpack-developing学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><a href="https://survivejs.com/webpack/developing/" target="_blank" rel="noopener">surviveJS-webpack-developing</a></strong></p>
+<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1><h2 id="首先安装webpack"><a href="#首先安装webpack" class="headerlink" title="首先安装webpack"></a>首先安装webpack</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add webpack</span><br></pre></td></tr></table></figure>
+<p>安装好webpack后，我们可以直接在控制台输入webpack，可以得到如下信息：<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-errors.png" alt=""><br>可以看到命令行提示我们安装webpack-cli，输入yes便可开始安装。安装完成后继续输入webpack:<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-console.png" alt=""><br>控制台的输出信息展示了：webpack的版本信息，hash信息以及编译时间和时长。</p>
+<p>首先我们来看下第一个问题：<br>在控制台输入webpack执行了什么呢？<br>在控制台输入<code>yarn bin</code>,可以得到一条路径，一般是存放在node_modules/.bin目录下，进入.bin目录，可以看到如下的链接信息<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-bin.png" alt=""><br>进入webpack指向的文件,可以看到启动文件webpack.js如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runCommand</span>(<span class="params">command, options</span>) </span>&#123;</span><br><span class="line"><span class="comment">// install</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> webpackCliInstalled = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>.resolve(<span class="string">"webpack-cli"</span>);</span><br><span class="line">  webpackCliInstalled = <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  webpackCliInstalled = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!webpackCliInstalled) &#123;</span><br><span class="line">  <span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line">  <span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line">  <span class="keyword">const</span> readLine = <span class="built_in">require</span>(<span class="string">"readline"</span>);</span><br><span class="line">  <span class="keyword">const</span> isYarn = fs.existsSync(path.resolve(process.cwd(), <span class="string">"yarn.lock"</span>));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> packageManager = isYarn ? <span class="string">"yarn"</span> : <span class="string">"npm"</span>;</span><br><span class="line">  <span class="keyword">const</span> options = [<span class="string">"install"</span>, <span class="string">"-D"</span>, <span class="string">"webpack-cli"</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isYarn) &#123;</span><br><span class="line">    options[<span class="number">0</span>] = <span class="string">"add"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> commandToBeRun = <span class="string">`<span class="subst">$&#123;packageManager&#125;</span> <span class="subst">$&#123;options.join(<span class="string">" "</span>)&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> question = <span class="string">`Would you like to install webpack-cli? (That will run <span class="subst">$&#123;commandToBeRun&#125;</span>) (yes/NO)`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.error(<span class="string">"The CLI moved into a separate package: webpack-cli"</span>);</span><br><span class="line">  <span class="keyword">const</span> questionInterface = readLine.createInterface(&#123;</span><br><span class="line">    input: process.stdin,</span><br><span class="line">    output: process.stdout</span><br><span class="line">  &#125;);</span><br><span class="line">  questionInterface.question(question, answer =&gt; &#123;</span><br><span class="line">    questionInterface.close();</span><br><span class="line">    <span class="keyword">switch</span> (answer.toLowerCase()) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">"y"</span>:</span><br><span class="line">      <span class="keyword">case</span> <span class="string">"yes"</span>:</span><br><span class="line">      <span class="keyword">case</span> <span class="string">"1"</span>: &#123;</span><br><span class="line">        runCommand(packageManager, options)</span><br><span class="line">          .then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">require</span>(<span class="string">"webpack-cli"</span>); <span class="comment">//eslint-disable-line</span></span><br><span class="line">          &#125;)</span><br><span class="line">          .catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.error(error);</span><br><span class="line">            process.exitCode = <span class="number">1</span>;</span><br><span class="line">          &#125;);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">default</span>: &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(</span><br><span class="line">          <span class="string">"It needs to be installed alongside webpack to use the CLI"</span></span><br><span class="line">        );</span><br><span class="line">        process.exitCode = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">"webpack-cli"</span>); <span class="comment">// eslint-disable-line</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到这个脚本主要内容就是加载webpack-cli，如果加载失败，输出错误信息，并引导用户安装webpack-cli。</p>
+<p>然后我们来看截图中的问题：<br>首先是提示要指定mode，webpack新增指定mode为development或者production,会有一些默认的配置。这个warning可以通过运行<code>webpack --mode development</code>来解决。<br>第二个问题就是没有entry，即没有入口模块，下面开始添加入口。</p>
+<h2 id="创建入口"><a href="#创建入口" class="headerlink" title="创建入口"></a>创建入口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn init -y</span><br></pre></td></tr></table></figure>
+<p>建立package.json文件,配置scripts命令：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts":&#123;</span><br><span class="line">  "prod": "webpack --mode production",</span><br><span class="line">  "dev": "webpack --mode development --devtool false"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>--devtool false</code>webpack会将生产的模板文件中的eval还原为原始代码。<br>然后新建两个测试文件</p>
+<p>src/component.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (text = <span class="string">"Hello world"</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line"></span><br><span class="line">  element.innerHTML = text;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>src/index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> component <span class="keyword">from</span> <span class="string">"./component"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(component());</span><br></pre></td></tr></table></figure></p>
+<p>那么我们怎么在浏览器打开呢，还需要一个Html文件，我们可以使用html-webpack-plugin插件。<br>webpack.config.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins:[</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">title</span>:<span class="string">'webpack'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行<code>yarn run prod</code>，在浏览器中打开Html文件，就可以看到Hello world了。</p>
+<h2 id="分析webpack输出"><a href="#分析webpack输出" class="headerlink" title="分析webpack输出"></a>分析webpack输出</h2><p>运行<code>yarn run prod</code>后，控制台输出如下：<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-prod.png" alt=""><br>我们可以看下此时的输出bundle是什么样子的：<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-prod-bundle.png" alt=""><br>mode为production时，输出的bundle会被压缩。</p>
+<p>接下来我们再运行下<code>yarn run dev</code>, 观察控制台输出：<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-dev.png" alt=""><br>在development模式下，会默认使用NameModulesPlugin,所以在Prod模式下的那些moduleId,chunkId现在都变成了names形式。同样看下输出的bundle:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123; <span class="comment">// webpackBootstrap</span></span><br><span class="line">  <span class="comment">// The module cache</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The require function</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Check if module is in cache</span></span><br><span class="line">    <span class="keyword">if</span>(installedModules[moduleId]) &#123;</span><br><span class="line">        <span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Create a new module (and put it into the cache)</span></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line">        i: moduleId,</span><br><span class="line">        l: <span class="literal">false</span>,</span><br><span class="line">        exports: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Execute the module function</span></span><br><span class="line">    modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Flag the module as loaded</span></span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return the exports of the module</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  __webpack_require__.xxx = xxx</span><br><span class="line"></span><br><span class="line">  <span class="comment">// __webpack_public_path__</span></span><br><span class="line">  __webpack_require__.p = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Load entry module and return exports</span></span><br><span class="line">  <span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="string">"./src/index.js"</span>);</span><br><span class="line">&#125;)</span><br><span class="line">(&#123;</span><br><span class="line"> <span class="string">"./src/component.js"</span>:(<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line">  __webpack_require__.r(__webpack_exports__);</span><br><span class="line">  <span class="comment">/* harmony default export */</span> __webpack_exports__[<span class="string">"default"</span>] = <span class="function">(<span class="params">(text = <span class="string">"Hello world"</span></span>) =&gt;</span> &#123;<span class="comment">//component.js&#125;);</span></span><br><span class="line"> &#125;),</span><br><span class="line"> <span class="string">"./src/index.js"</span>: (<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line">  __webpack_require__.r(__webpack_exports__);</span><br><span class="line">    <span class="comment">/* harmony import */</span> <span class="keyword">var</span> _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(<span class="comment">/*! ./component */</span> <span class="string">"./src/component.js"</span>);</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(<span class="built_in">Object</span>(_component__WEBPACK_IMPORTED_MODULE_0__[<span class="string">"default"</span>])());</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>可以看到生成的bundle中其实就是一个即时函数，参数modules就是根据entry解析后所需要的模块。modules对象属性名为模块地址，属性值为一个函数，函数主体就是我们模块的主体，但是import,require都被替换成了<code>__webpack_require__</code>。<br>仔细看下这个<code>__webpack_require__</code>到底是做什么的？观察<code>__webpack_require__</code>函数，</p>
+<ol>
+<li>判断installedModules对象中是否存储了这个moduleId, 如果有，直接返回属性值的exports属性。</li>
+<li>如果没有，则新建一个对象，<code>{i:moduleId, l:false, exports:{}}</code>, i表示id, l loaded表示是否加载，exports为空对象。 执行modules[moduleId]对应的函数，并传入<code>module, module.exports, __webpack_require__</code>，这就是为什么我们可以直接在文件中使用module,其实是webpack注入进来的。执行完对应的函数后，将loaded置为true，返回module.exports结果。<br>至此，我们的demo已经可以打包运行了，但是每次修改还是需要手动运行，再刷新浏览器，下面我们就一起看看webpack-dev-server能否帮我们解决这个问题捏。</li>
+</ol>
+<h1 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h1><h2 id="webpack-watch-mode"><a href="#webpack-watch-mode" class="headerlink" title="webpack watch mode"></a>webpack watch mode</h2><p>添加–watch参数，可以使webpack一直watching files，当文件改动时，可以自动编译， eg: <code>yarn run dev --watch</code>.<br>webpack-dev-server(WDS)也有watch的功能，并且更加强大。<br>WDS是运行在内存中的开发服务器，也就是说bundles不会输出到文件中，而是保存在内存中。WDS在你开发时，会监听文件的变化，自动编译自动刷新浏览器，并且支持webpack的热加载（HMR）功能。<br>虽然将文件保存在内存中，能提高性能，但有时候我们还是希望能输出到文件中，此时我们可以使用<code>write-file-webpack-plugin</code>插件。</p>
+<p>##Getting started with WDS<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add webpack-dev-server</span><br></pre></td></tr></table></figure></p>
+<p>package.json<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start":"webpack-dev-server --mode development"</span><br></pre></td></tr></table></figure></p>
+<p>运行<code>yarn start</code>,可以看到控制台输出<br><img src="/2018/04/05/surviveJS-webpack-developing/webpack-dev-server.png" alt=""><br>在浏览器中打开localhost:8080就可以看到Hello world的界面啦.</p>
+<h2 id="configuring-WDS"><a href="#configuring-WDS" class="headerlink" title="configuring WDS"></a>configuring WDS</h2><p>webpack.config.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    <span class="comment">// Display only errors to reduce the amount of output.</span></span><br><span class="line">    stats: <span class="string">"errors-only"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Parse host and port from env to allow customization.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// If you use Docker, Vagrant or Cloud9, set</span></span><br><span class="line">    <span class="comment">// host: options.host || "0.0.0.0";</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// 0.0.0.0 is available to all network devices</span></span><br><span class="line">    <span class="comment">// unlike default `localhost`.</span></span><br><span class="line">    host: process.env.HOST, <span class="comment">// Defaults to `localhost`</span></span><br><span class="line">    port: process.env.PORT, <span class="comment">// Defaults to 8080</span></span><br><span class="line">    open: <span class="literal">true</span>, <span class="comment">// Open the page in browser</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>这样配置后，可以通过<code>PORT=3000 yarn start</code>指定端口号。<br>虽然webpack-dev-server可以自动监听文件，但是却不能在webpack.config.js改变时，自动编译，我们只能在修改了配置后，重新启动服务才能生效。但是我们可以借助nodemon来监听webpack config file.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add nodemon</span><br></pre></td></tr></table></figure></p>
+<p>package.json<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --mode development\""</span><br></pre></td></tr></table></figure></p>
+<p>修改webpack.config.js，webpack就能够自动重新编译啦。</p>
+<h2 id="Polling-insted-of-watching-files"><a href="#Polling-insted-of-watching-files" class="headerlink" title="Polling insted of watching files"></a>Polling insted of watching files</h2><p>在一些旧版本的window,ubuntu,vagarant和docker上watch文件可能会失效，这个时候就可以允许Polling了。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">  watchOptions: &#123;</span><br><span class="line">    <span class="comment">// Delay the rebuild after the first change</span></span><br><span class="line">    aggregateTimeout: <span class="number">300</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Poll using interval (in ms, accepts boolean too)</span></span><br><span class="line">    poll: <span class="number">1000</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<h2 id="other-features-of-webpack-dev-server"><a href="#other-features-of-webpack-dev-server" class="headerlink" title="other features of webpack-dev-server"></a>other features of webpack-dev-server</h2><ul>
+<li>devServer.contentBase: 告诉服务器从哪里提供内容。只有在你想要提供静态文件时才需要。默认情况下，将使用当前工作目录作为提供内容的目录。</li>
+<li>devServer.proxy:如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。<br><a href="https://www.webpackjs.com/configuration/dev-server/#devserver-proxy" target="_blank" rel="noopener">更多配置信息见官网</a></li>
+</ul>
+<h1 id="Composing-Configuration"><a href="#Composing-Configuration" class="headerlink" title="Composing Configuration"></a>Composing Configuration</h1><p>如果把我们的配置文件拆成很多部分，可以使用<code>webpack-merge</code>来将多个部分组合在一起：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add webpack-merge</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">merge = require(&apos;webpack-merge&apos;);</span><br><span class="line">merge(&#123;a:[1], b:2, c:3&#125;, &#123;a:[2], b:3, d:4&#125;)</span><br><span class="line">// &#123;a:[1,2], b:3, c:3, d:4&#125;</span><br></pre></td></tr></table></figure>
+<p>对于这次的项目的配置文件，我们可以这样拆分组合：<br>webpack.parts.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exports.devServer = <span class="function">(<span class="params">&#123; host, port &#125; = &#123;&#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    stats: <span class="string">"errors-only"</span>,</span><br><span class="line">    host, <span class="comment">// Defaults to `localhost`</span></span><br><span class="line">    port, <span class="comment">// Defaults to 8080</span></span><br><span class="line">    open: <span class="literal">true</span>,</span><br><span class="line">    overlay: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>webpack.config.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">"webpack-merge"</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">"html-webpack-plugin"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> parts = <span class="built_in">require</span>(<span class="string">"./webpack.parts"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> commonConfig = merge([</span><br><span class="line">  &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">        title: <span class="string">"Webpack demo"</span>,</span><br><span class="line">      &#125;),</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> productionConfig = merge([]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> developmentConfig = merge([</span><br><span class="line">  parts.devServer(&#123;</span><br><span class="line">    <span class="comment">// Customize host/port here if needed</span></span><br><span class="line">    host: process.env.HOST,</span><br><span class="line">    port: process.env.PORT,</span><br><span class="line">  &#125;),</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">mode</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (mode === <span class="string">"production"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> merge(commonConfig, productionConfig, &#123; mode &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> merge(commonConfig, developmentConfig, &#123; mode &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>配置文件最后直接返回了一个函数，接受cli传入的env. 这意味着package.json也应该有相应的修改：<br>package.json<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"start"</span>: <span class="string">"webpack-dev-server --env development"</span>,</span><br><span class="line">  <span class="string">"build"</span>: <span class="string">"webpack --env production"</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/what-is-webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/02/what-is-webpack/" itemprop="url">what is webpack</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-02T19:27:50+08:00">2018-04-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/02/what-is-webpack/" class="leancloud_visitors" data-flag-title="what is webpack">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><a href="https://survivejs.com/webpack/what-is-webpack/" target="_blank" rel="noopener">what is webpack</a></strong>学习笔记。</p>
+<p>webpack是一个模块打包工具，它依赖模块。即使是一个很小的项目，利用webpack来打包，一般会包括entry和Output.打包就是从用户自定义的entry开始进行的。entry本身也是模块，并且可以通过import导入其他的模块。当你使用webpack打包项目时，webpack会通过Import来构建项目的依赖图（dependency graph），并根据webpack配置输出output。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/http-hash-router/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -889,7 +1233,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -906,7 +1250,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
