@@ -286,6 +286,300 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/emacs-keys/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/10/emacs-keys/" itemprop="url">emacs keys</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-10T10:28:37+08:00">2018-04-10</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/10/emacs-keys/" class="leancloud_visitors" data-flag-title="emacs keys">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>记录一些常用的spacemacs快捷键<br>C 代表 Ctrl<br>M 代表 Option</p>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// 退出</span><br><span class="line">退出emacs: C x C c</span><br><span class="line">退出当前操作：C g</span><br><span class="line"></span><br><span class="line">// 光标移动</span><br><span class="line">上一行：C p</span><br><span class="line">下一行：C n</span><br><span class="line">右移：C f</span><br><span class="line">左移：C b</span><br><span class="line">行首：C a</span><br><span class="line">行尾：C e</span><br><span class="line">删除光标后的单词：M d</span><br><span class="line">删除光标前的单词：M delete</span><br><span class="line">删除一个字母：C d</span><br><span class="line">删除某一行光标后的所有内容：C k</span><br><span class="line">光标所在区域定位到页面中间：C l</span><br><span class="line">光标移动到页面顶部：M shift &lt;</span><br><span class="line">光标移动到页面底部：M shift &gt;</span><br><span class="line">选中光标所在的单词：M m M w  扩大选中区域：w  缩小选中区域：V</span><br><span class="line">选中光标所在chunk: M h</span><br><span class="line"></span><br><span class="line">emacs黏贴：C y</span><br><span class="line">emacs剪切：C w</span><br><span class="line">emacs复制：M w</span><br><span class="line">全局复制：M m o y</span><br><span class="line"></span><br><span class="line">撤销操作：C -</span><br><span class="line">反撤销：C x u      q(quit)</span><br><span class="line"> </span><br><span class="line">选择模式：C space</span><br><span class="line">操作：M m M l  往右缩进：space   往左缩进：delete</span><br><span class="line"></span><br><span class="line">打开，新建文件：C x C f</span><br><span class="line">保存文件：C x C s</span><br></pre></td></tr></table></figure>
+<h2 id="dired-mode"><a href="#dired-mode" class="headerlink" title="dired mode"></a>dired mode</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">打开dired mode: C x C j</span><br><span class="line">删除光标所在文件：D</span><br><span class="line">复制光标所在文件：C</span><br><span class="line">重命名或移动光标所在文件：R</span><br><span class="line">上一层目录：shift ^</span><br><span class="line">标记当前文件：m 若要标记多个文件: C space选择文件  m 标记</span><br><span class="line">取消标记光标所在文件：u 若要取消多个文件标记：C space选择文件 u 取消</span><br><span class="line"></span><br><span class="line">切换工程：C c p p</span><br><span class="line">切换到前一个buffer: M m tab</span><br><span class="line">查看所有打开的文件：M m f r</span><br></pre></td></tr></table></figure>
+<h2 id="查找操作"><a href="#查找操作" class="headerlink" title="查找操作"></a>查找操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查找当前项目下的单词：C space 选择单词  / 开始搜索</span><br><span class="line">查找当前项目下的文件：C c p f</span><br><span class="line">查找当前文件下光标所在的单词：C c d(自定义的)</span><br><span class="line">查找当前文件下的单词：C s input word</span><br><span class="line">查找当前项目下某个路径范围内的单词：C c s 输入-G路径 单词 即可搜索路径内的单词</span><br></pre></td></tr></table></figure>
+<h2 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">右侧打开窗口：M m w v</span><br><span class="line">循环切换窗口：C x o </span><br><span class="line">多个窗口中保留当前光标所在窗口，关闭其他窗口：C x 1</span><br><span class="line">退出当前光标所在窗口：C x 0</span><br><span class="line">neotree上右侧打开窗口：shift |</span><br></pre></td></tr></table></figure>
+<h2 id="magit"><a href="#magit" class="headerlink" title="magit"></a>magit</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">打开操作界面：M m g s</span><br><span class="line">折叠当前光标下的文件：tab 查看上一个chunk：p 查看下一个chunk: n 进入这个文件：enter</span><br><span class="line">缓存当前光标下的文件：s</span><br><span class="line">提交：cc</span><br><span class="line">提交页面放弃提交操作：C c C k</span><br><span class="line">撤销缓存当前光标下的文件：u</span><br><span class="line">放弃当前文件操作：k</span><br><span class="line">刷新：g</span><br><span class="line">帮助：shift ?</span><br><span class="line">git blame：M m g b  q(quit)</span><br><span class="line">查看当前文件的History：M m g t</span><br><span class="line">剪切commit号：M w</span><br></pre></td></tr></table></figure>
+<h2 id="eslint"><a href="#eslint" class="headerlink" title="eslint"></a>eslint</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看eslint error: C c ! p/n/l</span><br><span class="line">查看底部出现的所有提示：M m w p m</span><br></pre></td></tr></table></figure>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查询函数：C h f</span><br><span class="line">执行命令：M x</span><br><span class="line">上一页：C v</span><br><span class="line">下一页：M v</span><br><span class="line">教程：C h t</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/surviveJS-webpack-styling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/09/surviveJS-webpack-styling/" itemprop="url">surviveJS-webpack-styling</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-09T14:41:10+08:00">2018-04-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/09/surviveJS-webpack-styling/" class="leancloud_visitors" data-flag-title="surviveJS-webpack-styling">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/surviveJS-webpack-developing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,7 +1527,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1252,7 +1546,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
