@@ -286,6 +286,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/responsive-image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/12/responsive-image/" itemprop="url">responsive images</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T19:24:34+08:00">2018-04-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/04/12/responsive-image/" class="leancloud_visitors" data-flag-title="responsive images">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank" rel="noopener">Responsive Images</a>学习笔记</p>
+<h2 id="why-need-responsive-images"><a href="#why-need-responsive-images" class="headerlink" title="why need responsive images"></a>why need responsive images</h2><p>假设我们在做一个网页，页面上需要一些图片，在PC端打开这个网页，图片是很清晰很合适的。此时被告知，这个页面在移动端也需要用到，把页面调成手机模式，可以发现屏幕变窄了，图片变得很小而且不清晰。可以看下mdn的一个例子：<a href="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/not-responsive.html" target="_blank" rel="noopener">no responsive example</a>,<a href="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/responsive.html" target="_blank" rel="noopener">responsive example</a></p>
+<p>art direction problem: 当在一个狭窄的屏幕，或者中等屏幕比如平板上浏览网页时，显示一个裁剪后的图片会更好。比如，我们在PC上有一张人物在中间，背景较大，人物较小的图片，当放到移动端查看时，图片被缩小，人物就几乎看不清楚了，最好是在手机端显示一个人物放大的裁剪后的图片。<br>resolution switch problem: 如果在一个较小的移动屏幕上观看，就不需要使用那么大的图片，这就是所谓的分辨率切换问题。对比于矢量图片，栅格图片如果显示的尺寸大于本身的尺寸时，视觉效果是很糟糕的；当显示尺寸小于本身的尺寸时，对带宽又是一种浪费，尤其对于手机用户，一个小尺寸的图片就能显示很好的效果，却要浪费带宽去下载一个为PC设计的大图片。所以较理想的方案是根据不同的设备尺寸显示不同大小的图片。你可能会说矢量图片可以解决上面的问题，矢量图片一般都较小，并且对于简单的图形、模式、界面元素等等都表现的很好，但是对于一些复杂的图像，创建矢量图会变得很复杂。</p>
+<p>上面的这些问题在web开发前期是不存在的，因为那时候上网的主要设备是台式机和笔记本，所以浏览器引擎和早期的规范都没考虑这个问题。响应式图片技术是最近才实现的技术，给浏览器提供多个图片文件，展示同样的内容但是不同的像素大小(resolution switching)，也可以是在不同的空间使用不同的图片(art direction)。</p>
+<h2 id="Create-Responsive-Images"><a href="#Create-Responsive-Images" class="headerlink" title="Create Responsive Images"></a>Create Responsive Images</h2><h3 id="Resolution-Switching"><a href="#Resolution-Switching" class="headerlink" title="Resolution Switching"></a>Resolution Switching</h3><p>我们将要使用<code>&lt;img&gt;</code>元素来创建响应式图片，根据设备大小显示合适大小的图片。一般在使用img时，主要指定src和alt属性：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"logo.jpg"</span> <span class="attr">alt</span>=<span class="string">"logo"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>下面要介绍两个新的属性：<code>srcset</code>、 <code>sizes</code>,提供一些带提示的图片源，帮助浏览器选择更合适的图片展示。</p>
+<h4 id="srcset"><a href="#srcset" class="headerlink" title="srcset"></a>srcset</h4><p><code>srcset</code>提供一系列可供选择的图片字符串，字符串的组合为：</p>
+<ul>
+<li>图片路径</li>
+<li>可选描述符如下，每个描述符前有空格<ul>
+<li>宽度描述符：一个后跟w的正数。宽度描述符除以<code>sizes</code>属性中给定的size，用以计算像素密度。</li>
+<li>像素密度描述符：一个后跟x的正浮点数。</li>
+</ul>
+</li>
+</ul>
+<p>如果没有指定任何描述符，会分配默认的描述符<code>1x</code>。</p>
+<p>不要在srcset属性中混合宽度描述符和像素密度描述符，或者指定重复的描述符，比如两张图片都使用2x作为描述符。<br>这为浏览器提供了很大的选择余地，浏览器可以根据用户偏好或者带宽条件，从提供的图片源中选择最合适的一张图片显示。</p>
+<h4 id="sizes"><a href="#sizes" class="headerlink" title="sizes"></a>sizes</h4><p><code>sizes</code>提供一系列图片size的字符串，字符串组合为：</p>
+<ul>
+<li>媒体查询条件，最后一个字符串省略这项，作为默认size</li>
+<li>a source size value, 用以指定图片的预期显示大小。</li>
+</ul>
+<p>当<code>srcset</code>中提供了宽度描述符，用户浏览器会根据当前的source size来选择<code>srcset</code>中提供的图片。被选择的source size会影响图片的原始大小（如果没有使用CSS样式）。如果没有提供srcset属性，或者srcset属性中没有宽度描述符或包含无效宽度描述符，<code>sizes</code>属性就不起作用。</p>
+<h4 id="width-descriptor"><a href="#width-descriptor" class="headerlink" title="width descriptor"></a>width descriptor</h4><p>eg: <a href="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/responsive.html" target="_blank" rel="noopener">responsive-width</a><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">"320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             800w.jpg 800w"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">"(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">"800w.jpg"</span> <span class="attr">alt</span>=<span class="string">"Elva dressed as a fairy"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面代码的意思是：<br>srcset:向浏览器提供了三张图片，宽度分别为320px, 480px，800px。<br>sizes:当设备大小小于320px时，图片预计显示大小为280px；当设备大小小于480px时，图片预计显示大小为440px；其他设备大小，图片预计显示大小为800px。</p>
+<p>浏览器的选择过程：</p>
+<ol>
+<li>查询当前设备宽度</li>
+<li>根据sizes中的媒体查询条件，找到第一个为true的条件下图片预计显示大小</li>
+<li>加载srcset中图片宽度最靠近步骤2中获取的预计图片显示大小的图片</li>
+</ol>
+<p>所以如果一个设备宽度为480px的浏览器加载这个网页，(max-width: 480px)的媒体查询条件满足，图片预计展示大小为440px，srcset属性中最靠近440px的图片为480w.jpg，因此浏览器会加载480w.jpg。假设800px的图片大小为128kb，480px的图片大小为63kb，就可以节约65kb。所以当一个网页上有很多图片时，使用响应式图片就可以为手机用户节约很多带宽。<br>对于不支持srcset和sizes属性的旧浏览器，浏览器就会忽略这两个属性，加载src中定义的图片。</p>
+<p><strong>note:</strong>一些手机浏览器会使用错误的视口宽度，它们会加载一个适合更大视口上加载的网页，然后展示缩小的页面，这样的话很不适合响应式图片的设计。因此我们可以在<code>head</code>中使用<code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;</code>来强制手机浏览器使用真实的视口宽度来加载网页。</p>
+<h4 id="pixel-density-descriptor"><a href="#pixel-density-descriptor" class="headerlink" title="pixel density descriptor"></a>pixel density descriptor</h4><p>如果需要支持多种显示分辨率，但每个人在屏幕上看到的大小都跟真实的大小一样，可以允许浏览器选择合适的分辨率图像。这时可以使用像素密度描述符描述<code>srcset</code>中的图片源，并省略<code>sizes</code>属性。可以看这个例子：<a href="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/srcset-resolutions.html" target="_blank" rel="noopener">responsive-resolutions</a><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">"320w.jpg,</span></span></span><br><span class="line"><span class="tag"><span class="string">             480w.jpg 1.5x,</span></span></span><br><span class="line"><span class="tag"><span class="string">             640w.jpg 2x"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">"640w.jpg"</span> <span class="attr">alt</span>=<span class="string">"Elva dressed as a fairy"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在这个例子中，我们不需要<code>sizes</code>，因为浏览器只会根据分辨率来选择图片，如果浏览器分辨率为1，加载320w.jpg；浏览器分辨率为1.5时，加载480w.jpg；浏览器分辨率为2时，加载640w.jpg。</p>
+<h3 id="Art-direction"><a href="#Art-direction" class="headerlink" title="Art direction"></a>Art direction</h3><p>总的来说，art direction problem 涉及到要改变图片来适应不同的图片展示大小。还是一开始那个例子，人物照背景很大，放到手机端，人物就会很小，可以放一张裁剪的，人物被放大的图片在手机端展示。可以使用<code>&lt;picture&gt;</code>来实现。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(max-width: 799px)"</span> <span class="attr">srcset</span>=<span class="string">"480w.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 800px)"</span> <span class="attr">srcset</span>=<span class="string">"800w.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"1240w.jpg"</span> <span class="attr">alt</span>=<span class="string">"Chris standing up holding his daughter Elva"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>&lt;source&gt;</code>的media属性，起到媒体查询的作用，上面的例子表示：当设备宽度小于799px时，加载480w.jpg，如果设备宽度大于800px，加载800w.jpg。</li>
+<li>srcset属性包含图片路径，跟之前的<code>&lt;img&gt;</code>一样，<code>&lt;source&gt;</code>也有srcset属性，可以接受一组图片路径，也有sizes属性。因此<code>&lt;picture&gt;</code>可以提供不同的图片，同时还可以提供不同分辨率下显示的图片。但是不要同时使用sizes和media属性。</li>
+<li>在<code>&lt;/picture&gt;</code>前必须有<code>&lt;img&gt;</code>元素，带有src和alt属性，不然就不会有图片显示。当所有查询条件都不满足时，会展示img中的元素。</li>
+</ul>
+<p>我们还可以给<code>&lt;picture&gt;</code>提供type属性，存储MIME类型，对于不支持的文件类型，浏览器可以立即放弃：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">type</span>=<span class="string">"image/svg+xml"</span> <span class="attr">srcset</span>=<span class="string">"pyramid.svg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">srcset</span>=<span class="string">"pyramid.webp"</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"pyramid.png"</span> <span class="attr">alt</span>=<span class="string">"regular pyramid built from four equilateral triangles"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>除非需要art direction，否则不要使用media属性</li>
+<li>在<code>&lt;source&gt;</code>中，srcset只能引入type类型定义的图像类型</li>
+<li>需要的时候，也可以使用srcset和sizes定义一系列图片源</li>
+</ul>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank" rel="noopener">source属性</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank" rel="noopener">Responsive Images</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank" rel="noopener">img</a></li>
+<li><a href="http://www.zhangxinxu.com/wordpress/2014/10/responsive-images-srcset-size-w-descriptor/" target="_blank" rel="noopener">响应式图片</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/surviveJS-webpack-loadingAssets/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1807,7 +2012,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
