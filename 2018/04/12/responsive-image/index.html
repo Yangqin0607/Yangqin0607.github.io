@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="Ailsa&#39;s blog">
 <meta property="og:description" content="Responsive Images学习笔记 why need responsive images假设我们在做一个网页，页面上需要一些图片，在PC端打开这个网页，图片是很清晰很合适的。此时被告知，这个页面在移动端也需要用到，把页面调成手机模式，可以发现屏幕变窄了，图片变得很小而且不清晰。可以看下mdn的一个例子：no responsive example,responsive example art">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T06:23:10.155Z">
+<meta property="og:updated_time" content="2018-04-16T06:43:31.473Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="responsive images">
 <meta name="twitter:description" content="Responsive Images学习笔记 why need responsive images假设我们在做一个网页，页面上需要一些图片，在PC端打开这个网页，图片是很清晰很合适的。此时被告知，这个页面在移动端也需要用到，把页面调成手机模式，可以发现屏幕变窄了，图片变得很小而且不清晰。可以看下mdn的一个例子：no responsive example,responsive example art">
@@ -429,10 +429,15 @@
 <li>需要的时候，也可以使用srcset和sizes定义一系列图片源</li>
 </ul>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank" rel="noopener">source属性</a></p>
+<h2 id="webpack-tools"><a href="#webpack-tools" class="headerlink" title="webpack tools"></a>webpack tools</h2><p><code>responsive-loader</code>和<code>resize-image-loader</code>可以生成不同尺寸的图片作为srcset，对于根据设备宽度选择图片时，我们只需要一张图片，webpack就可以在引入时帮我们生成多个size的图片，作为srcset图片源。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images" target="_blank" rel="noopener">Responsive Images</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank" rel="noopener">img</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank" rel="noopener"><code>&lt;img&gt;</code></a></li>
 <li><a href="http://www.zhangxinxu.com/wordpress/2014/10/responsive-images-srcset-size-w-descriptor/" target="_blank" rel="noopener">响应式图片</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank" rel="noopener"><code>&lt;source&gt;</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture" target="_blank" rel="noopener"><code>&lt;picture&gt;</code></a></li>
+<li><a href="https://www.npmjs.com/package/responsive-loader" target="_blank" rel="noopener">responsive-loader</a></li>
+<li><a href="https://www.npmjs.com/package/resize-image-loader" target="_blank" rel="noopener">resize-image-loader</a></li>
 </ul>
 
       
@@ -619,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-need-responsive-images"><span class="nav-number">1.</span> <span class="nav-text">why need responsive images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Responsive-Images"><span class="nav-number">2.</span> <span class="nav-text">Create Responsive Images</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Resolution-Switching"><span class="nav-number">2.1.</span> <span class="nav-text">Resolution Switching</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#srcset"><span class="nav-number">2.1.1.</span> <span class="nav-text">srcset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sizes"><span class="nav-number">2.1.2.</span> <span class="nav-text">sizes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#width-descriptor"><span class="nav-number">2.1.3.</span> <span class="nav-text">width descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pixel-density-descriptor"><span class="nav-number">2.1.4.</span> <span class="nav-text">pixel density descriptor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Art-direction"><span class="nav-number">2.2.</span> <span class="nav-text">Art direction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-need-responsive-images"><span class="nav-number">1.</span> <span class="nav-text">why need responsive images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Responsive-Images"><span class="nav-number">2.</span> <span class="nav-text">Create Responsive Images</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Resolution-Switching"><span class="nav-number">2.1.</span> <span class="nav-text">Resolution Switching</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#srcset"><span class="nav-number">2.1.1.</span> <span class="nav-text">srcset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sizes"><span class="nav-number">2.1.2.</span> <span class="nav-text">sizes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#width-descriptor"><span class="nav-number">2.1.3.</span> <span class="nav-text">width descriptor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pixel-density-descriptor"><span class="nav-number">2.1.4.</span> <span class="nav-text">pixel density descriptor</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Art-direction"><span class="nav-number">2.2.</span> <span class="nav-text">Art direction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-tools"><span class="nav-number">3.</span> <span class="nav-text">webpack tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
