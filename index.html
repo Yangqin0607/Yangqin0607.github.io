@@ -286,6 +286,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/surviveJS-webpack-building/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/02/surviveJS-webpack-building/" itemprop="url">surviveJS-webpack-building 学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-02T19:10:56+08:00">2018-05-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/02/surviveJS-webpack-building/" class="leancloud_visitors" data-flag-title="surviveJS-webpack-building 学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><a href="https://survivejs.com/webpack/building/" target="_blank" rel="noopener">surviveJS-webpack-building</a></strong></p>
+<h1 id="Source-Maps"><a href="#Source-Maps" class="headerlink" title="Source Maps"></a>Source Maps</h1><p>如果在浏览器打开网页调试，我们会看到打包后的代码，当出现问题的时候，我们怎么定位到原始的代码中呢。这个时候就需要借助source maps，它提供原始代码和打包后的代码之间的映射，不仅可以映射JS，也可以用于CSS。</p>
+<p>webpack 4中当mode为development时，会自动为你开启source maps。</p>
+<h2 id="Inline-source-maps-and-Separate-source-maps"><a href="#Inline-source-maps-and-Separate-source-maps" class="headerlink" title="Inline source maps and Separate source maps"></a>Inline source maps and Separate source maps</h2><p>webpack提供了行内source map和分离的source map。在开发模式下，行内source map性能会更好；分离的source map更适合生产模式，这样不会增大bundle的大小，并且可以选择是否加载source maps。</p>
+<h2 id="Enabling-source-maps"><a href="#Enabling-source-maps" class="headerlink" title="Enabling source maps"></a>Enabling source maps</h2><p>webpack提供两种开启source map的方法。使用devtool配置字段；或者使用插件来提供更多控制；除了webpack需要配置，还需要开启你开发所在浏览器的source map功能。</p>
+<h3 id="Enabling-source-maps-in-webpack"><a href="#Enabling-source-maps-in-webpack" class="headerlink" title="Enabling source maps in webpack"></a>Enabling source maps in webpack</h3><p>webpack.parts.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.generateSourceMaps = <span class="function">(<span class="params">&#123; type &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  devtool: type,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>webpack支持多种source map类型，这些source map主要是在性能和编译速度上不一样。我们可以在生产环境开启source-map，在开发环境使用webpack提供的默认选项。因此可以这样设置：<br>webpack.config.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> productionConfig = merge([</span><br><span class="line"></span><br><span class="line">  parts.generateSourceMaps(&#123; <span class="attr">type</span>: <span class="string">"source-map"</span> &#125;),</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>source-map是编译最慢但是性能最好的一种source map类型，但是用在生产环境也是一种不错的选择。<br><code>yarn run prod</code>看下控制台的输出：<br><img src="/2018/05/02/surviveJS-webpack-building/source-map.png" alt=""><br>可以看一下.map的文件，里面存放的就是源代码和打包后代码的映射。在开发环境下，这些映射信息写在bundle中。</p>
+<h3 id="Enabling-source-maps-in-browsers"><a href="#Enabling-source-maps-in-browsers" class="headerlink" title="Enabling source maps in browsers"></a>Enabling source maps in browsers</h3><p><a href="https://developers.google.com/web/tools/chrome-devtools/" target="_blank" rel="noopener">chrome</a> 调试方法。<br>其他浏览器可以自行谷歌。</p>
+<h2 id="Source-map-types-supported-by-webpack"><a href="#Source-map-types-supported-by-webpack" class="headerlink" title="Source map types supported by webpack"></a>Source map types supported by webpack</h2><p>source maps主要分两类：</p>
+<ul>
+<li>inline 行内source map将映射数据直接存放在打包后的文件中</li>
+<li>separate 分离source map将映射数据存放在单独的文件中，使用评论链接源代码<br>inline source map打包速度快，适合于开发环境，但因为内联的方式，会增大bundle的体积。因此在生产环境中适合使用separate source map。</li>
+</ul>
+<h3 id="inline-source-maps"><a href="#inline-source-maps" class="headerlink" title="inline source maps"></a>inline source maps</h3><p>webpack提供了多种内联source map，一般都包含‘eval’, 其中<code>cheap-module-eval-source-map</code>在chrome和firefox上都很稳定，并且在速度和性能上也都不错。<br>下面列出了webpack提供的inline source map，并且都有示例。源代码中只有一句<code>console.log(&#39;hello world&#39;)</code>,并且使用了<code>webpack.NamedModulesPlugin</code>来帮助理解。<a href="https://survivejs.com/webpack/building/source-maps/" target="_blank" rel="noopener">示例原文</a></p>
+<h4 id="devtool-“eval”"><a href="#devtool-“eval”" class="headerlink" title="devtool: “eval”"></a>devtool: “eval”</h4><p>每个模块都用eval函数包裹。</p>
+<h4 id="devtool-“cheap-eval-source-map”"><a href="#devtool-“cheap-eval-source-map”" class="headerlink" title="devtool: “cheap-eval-source-map”"></a>devtool: “cheap-eval-source-map”</h4><p><code>cheap-eval-source-map</code>更进一步，将代码信息用base64编码为data url，只包含行信息，无列信息。</p>
+<h4 id="devtool-“cheap-module-eval-source-map”"><a href="#devtool-“cheap-module-eval-source-map”" class="headerlink" title="devtool: “cheap-module-eval-source-map”"></a>devtool: “cheap-module-eval-source-map”</h4><p>这种方式品质更高，但是速度会慢一些。</p>
+<h4 id="devtool-“eval-source-map”"><a href="#devtool-“eval-source-map”" class="headerlink" title="devtool: “eval-source-map”"></a>devtool: “eval-source-map”</h4><p>是品质最高的行内source map，但构建速度也是最慢的。</p>
+<h3 id="separate-source-maps"><a href="#separate-source-maps" class="headerlink" title="separate source maps"></a>separate source maps</h3><p>分离的source map会将映射关系存放在以.map为扩展名的文件中，需要时才会被浏览器加载。</p>
+<h4 id="devtool-“cheap-source-map”"><a href="#devtool-“cheap-source-map”" class="headerlink" title="devtool: “cheap-source-map”"></a>devtool: “cheap-source-map”</h4><p><code>cheap-source-map</code>和上面那些带cheap的选项一样，不包含列映射以及来自loader，比如css-loader的source map。</p>
+<h4 id="devtool-“cheap-module-source-map”"><a href="#devtool-“cheap-module-source-map”" class="headerlink" title="devtool: “cheap-module-source-map”"></a>devtool: “cheap-module-source-map”</h4><p><code>cheap-module-source-map</code>和<code>cheap-source-map</code>相似，但是包含loaders的source map。</p>
+<h4 id="devtool-“hidden-source-map”"><a href="#devtool-“hidden-source-map”" class="headerlink" title="devtool: “hidden-source-map”"></a>devtool: “hidden-source-map”</h4><p>和source-map相似，但是不会在源文件中写入source maps的引用。如果你不想直接在开发者工具中暴露source maps，只需要stack traces，可以使用这种方式。</p>
+<h4 id="devtool-“nosources-source-map”"><a href="#devtool-“nosources-source-map”" class="headerlink" title="devtool: “nosources-source-map”"></a>devtool: “nosources-source-map”</h4><p>这种方式创建的source map没有source content，只提供stack traces。如果不想将源代码暴露到客户端可以使用这种方式。</p>
+<h4 id="devtool-“source-map”"><a href="#devtool-“source-map”" class="headerlink" title="devtool: “source-map”"></a>devtool: “source-map”</h4><p><code>source-map</code>构建速度慢，但是性能很好。如果你不在意生产环境的source maps，也可以不设置source map。</p>
+<p>下面<a href="https://www.webpackjs.com/configuration/devtool/" target="_blank" rel="noopener">这张图</a>对比了这些source maps;<br><img src="/2018/05/02/surviveJS-webpack-building/sourcemaptypes.png" alt=""></p>
+<h3 id="other-source-map-options"><a href="#other-source-map-options" class="headerlink" title="other source map options"></a>other source map options</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    <span class="comment">// Modify the name of the generated source map file.</span></span><br><span class="line">    <span class="comment">// You can use [file], [id], and [hash] replacements here.</span></span><br><span class="line">    <span class="comment">// The default option is enough for most use cases.</span></span><br><span class="line">    sourceMapFilename: <span class="string">'[file].map'</span>, <span class="comment">// Default</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// This is the source map filename template. It's default</span></span><br><span class="line">    <span class="comment">// format depends on the devtool option used. You don't</span></span><br><span class="line">    <span class="comment">// need to modify this often.</span></span><br><span class="line">    devtoolModuleFilenameTemplate:</span><br><span class="line">      <span class="string">'webpack:///[resource-path]?[loaders]'</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用了UglifyJsPlugin，同时还需要source maps，需要在这个插件中使用<code>sourceMap:true</code>开启source map。因为UglifyJS对源代码做了进一步转换，会破坏映射。对于其他一些plugins和loaders也是一样的，比如css-loader.</p>
+<h2 id="SourceMapDevToolPlugin-and-EvalSourceMapDevToolPlugin"><a href="#SourceMapDevToolPlugin-and-EvalSourceMapDevToolPlugin" class="headerlink" title="SourceMapDevToolPlugin and EvalSourceMapDevToolPlugin"></a>SourceMapDevToolPlugin and EvalSourceMapDevToolPlugin</h2><p>如果对生成的source map需要更多的控制，可以使用<code>SmourceMapDevToolPlugin</code>或者<code>EvalSourceMapDevToolPlugin</code>。后者主要控制跟eval相关的source map。两个插件都可以更细粒度的控制source map，使用这些插件可以跳过对devtool的设置。<br>比如，webpack默认只会对.js和.css文件生成source maps，<code>SmourceMapDevToolPlugin</code>可以接受一个正则如/.(js|jsx|css)($|\?)/i，这样就可以允许对其他扩展名的文件也生成source map了。<br><code>EvalSourceMapDevToolPlugin</code>可以看成是<code>devtool:&quot;eval&quot;</code>的别名，同时能提供更灵活的控制。</p>
+<h2 id="Source-Maps-for-Styling"><a href="#Source-Maps-for-Styling" class="headerlink" title="Source Maps for Styling"></a>Source Maps for Styling</h2><p>如果希望获得样式文件的source maps，可以开启sourceMap选项，如css-loader, sass-loader, less-loader。<br>当imports中使用相对路径时，css-loader会有一些<a href="https://github.com/webpack-contrib/css-loader/issues/232" target="_blank" rel="noopener">问题</a>，可以通过设置<code>output.publicPath</code>指向服务器url解决。</p>
+<h2 id="conclusion"><a href="#conclusion" class="headerlink" title="conclusion"></a>conclusion</h2><ul>
+<li><code>devtool: &quot;source-map&quot;</code>是映射质量最高，适于生产环境使用。</li>
+<li><code>cheap-module-eval-source-map</code>适合用于开发环境。</li>
+<li>如果生产环境中只需要stack traces，可以用<code>devtool: &quot;hidden-source-map&quot;</code>。可以捕获输出并利用第三方服务测试并解决问题。</li>
+<li><code>SourceMapDevToolPlugin</code>和<code>EvalSourceMapDevToolPlugin</code>对source map 提供了更细粒度的控制。</li>
+<li><code>source-map-loader</code> can come in handy if your dependencies provide source maps.</li>
+<li>开启样式的source maps需要对你使用的每个样式相关的loader设置sourceMap选项</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/responsive-image/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2028,7 +2218,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
