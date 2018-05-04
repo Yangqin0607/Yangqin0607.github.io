@@ -286,6 +286,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/surviveJS-webpack-optimizing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ailsa">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ailsa's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/04/surviveJS-webpack-optimizing/" itemprop="url">surviveJS-webpack-optimizing 学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-04T16:18:21+08:00">2018-05-04</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/04/surviveJS-webpack-optimizing/" class="leancloud_visitors" data-flag-title="surviveJS-webpack-optimizing 学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views:</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><a href="https://survivejs.com/webpack/optimizing/" target="_blank" rel="noopener">surviveJS-webpack-optimizing</a></strong></p>
+<h1 id="Minifying"><a href="#Minifying" class="headerlink" title="Minifying"></a>Minifying</h1><p>webpack4 mode为production时，默认会使用UglifyJS来压缩代码。压缩代码就是把代码转换为体积更小的形式。安全转换在压缩代码的同时不会改变代码的作用，比如重命名变量名或者删除一些不可能执行的代码（if(false)）。非安全转换可能会破坏代码，因为可能会丢失底层代码隐含的某些内容，比如angular1 使用模块时，函数变量名是特定的，改写变量名就会破坏代码功能。</p>
+<h2 id="Modifying-JavaScript-Minification-Process"><a href="#Modifying-JavaScript-Minification-Process" class="headerlink" title="Modifying JavaScript Minification Process"></a>Modifying JavaScript Minification Process</h2><p>webpack4 中提供了两个配置项来控制压缩过程：<code>optimization.minimize</code>来开关压缩功能，<code>optimization.minimizer</code>数组来配置过程。<br>为了调整默认行为，我们添加<code>uglifyjs-webpack-plugin</code>到我们的例子中。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add uglifyjs-webpack-plugin -D</span><br></pre></td></tr></table></figure></p>
+<p>webpack.parts.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UglifyWebpackPlugin = <span class="built_in">require</span>(<span class="string">"uglifyjs-webpack-plugin"</span>);</span><br><span class="line"></span><br><span class="line">exports.minifyJavaScript = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimizer: [<span class="keyword">new</span> UglifyWebpackPlugin(&#123; <span class="attr">sourceMap</span>: <span class="literal">true</span> &#125;)],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>webpack.config.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> productionConfig = merge([</span><br><span class="line">  parts.clean(PATHS.build),</span><br><span class="line"></span><br><span class="line">  parts.minifyJavaScript(),</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<p>编译后结果应该跟之前一样，但是通过这种方式使用的是最新的UglifyJS版本。<br>source map默认是关闭的，可以通过sourceMap开启。如果需要在打包后的代码中删除console.log，可以设置<code>uglifyOptions.compress.drop_console</code>为true。</p>
+<h2 id="Speeding-Up-JavaScript-Execution"><a href="#Speeding-Up-JavaScript-Execution" class="headerlink" title="Speeding Up JavaScript Execution"></a>Speeding Up JavaScript Execution</h2><blockquote>
+<p>Specific solutions allow you to preprocess code so that it will run faster. They complement the minification technique and can be split into scope hoisting, pre-evaluation, and improving parsing. It’s possible these techniques grow overall bundle size sometimes while allowing faster execution.</p>
+</blockquote>
+<h3 id="scope-hoisting"><a href="#scope-hoisting" class="headerlink" title="scope hoisting"></a>scope hoisting</h3><p>webpack 4 在生产模式自动应用了scope hoisting。过去 webpack 打包时将 bundle 中各个模块单独打包成闭包。这些打包函数使你的 JavaScript 在浏览器中处理的更慢。相比之下，一些工具像 Closure Compiler 和 RollupJS 可以提升(hoist)或者预编译所有模块到一个闭包中，提升你的代码在浏览器中的执行速度。<a href="https://medium.com/webpack/brief-introduction-to-scope-hoisting-in-webpack-8435084c171f" target="_blank" rel="noopener">webpack scope hositing 博客</a></p>
+<p>在<a href="http://yangqin0607.coding.me/2018/04/05/surviveJS-webpack-developing/" target="_blank" rel="noopener">developing学习笔记</a>中，我们看了webpack输出的打包文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">modules</span>) </span>&#123; <span class="comment">// webpackBootstrap</span></span><br><span class="line">  <span class="comment">// The module cache</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The require function</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">      </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  __webpack_require__.xxx = xxx</span><br><span class="line">  </span><br><span class="line">   <span class="comment">// __webpack_public_path__</span></span><br><span class="line">  __webpack_require__.p = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Load entry module and return exports</span></span><br><span class="line">  <span class="keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="string">"./src/index.js"</span>);</span><br><span class="line">&#125;)</span><br><span class="line">(&#123;</span><br><span class="line"> <span class="string">"./src/component.js"</span>:(<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123; &#125;),</span><br><span class="line"> <span class="string">"./src/index.js"</span>: (<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123; &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如下，没有使用scope hoisting的时候，index.js中引入component.js时，会使用<code>_webpack_require_(&quot;./src/component.js&quot;)</code>,然后我们开启下scope hoisting，对比下webpack会怎么处理component.js。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">module, exports, __webpack_require__</span>) </span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> _component = __webpack_require__(<span class="comment">/*! ./component */</span> <span class="string">"./src/component.js"</span>);</span><br><span class="line">  <span class="keyword">var</span> _component2 = _interopRequireDefault(_component);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_interopRequireDefault</span>(<span class="params">obj</span>) </span>&#123; <span class="keyword">return</span> obj &amp;&amp; obj.__esModule ? obj : &#123; <span class="attr">default</span>: obj &#125;; &#125;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild((<span class="number">0</span>, _component2.default)());</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+<p>由于实现 ECMAScript 模块语法,scope hoisting这个特定于此语法的功能才成为可能。webpack 可能会根据你正在使用的模块类型和其他的情况，回退到普通打包。此插件仅适用于由 webpack 直接处理的 ES6 模块。在使用转译器(transpiler)时，你需要禁用对模块的处理（例如 Babel 中的 modules 选项）。所以开启scope hoisting，还需要在.babelrc中设置<code>{modules:false}</code>，禁用对模块的处理。<br>webpack.parts.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.hoistCode = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  plugins: [<span class="keyword">new</span> webpack.optimize.ModuleConcatenationPlugin()]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>.babelrc<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>:[</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"env"</span>,</span><br><span class="line">      &#123;<span class="attr">"modules"</span>:<span class="literal">false</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>开启scope hoisting，index.js打包内容如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"><span class="meta">  "use strict"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// CONCATENATED MODULE: ./src/component.js</span></span><br><span class="line">  <span class="comment">/* harmony default export */</span> <span class="keyword">var</span> component = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> text = <span class="built_in">arguments</span>.length &gt; <span class="number">0</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] !== <span class="literal">undefined</span> ? <span class="built_in">arguments</span>[<span class="number">0</span>] : <span class="string">'Hello world'</span>;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">    element.innerHTML = text;</span><br><span class="line">    <span class="keyword">return</span> element;</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="keyword">var</span> a = <span class="string">"123"</span>;</span><br><span class="line">  <span class="comment">// CONCATENATED MODULE: ./src/index.js</span></span><br><span class="line">  </span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(component());</span><br><span class="line"></span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure></p>
+<p>可以看到component.js直接被引入到了index.js中，而不是单独封装了。<br>给webpack传递<code>--display-optimization-bailout</code>标志，可以debug跟scope hoisting相关的信息。</p>
+<h3 id="pre-evaluation"><a href="#pre-evaluation" class="headerlink" title="pre-evaluation"></a>pre-evaluation</h3><p><a href="https://www.npmjs.com/package/prepack-webpack-plugin" target="_blank" rel="noopener"><code>prepack-webpack-plugin</code></a>会在编译阶段做一些计算，从而加快代码执行时速度。该插件使用的是<a href="https://prepack.io/" target="_blank" rel="noopener">Prepack</a>。举个简单的例子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">'hello'</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">world</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">'world'</span>; &#125;</span><br><span class="line">  global.s = hello() + <span class="string">' '</span> + world();</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure></p>
+<p>用prepack编译后为：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"hello world"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>但是这个plugin跟旧的webpack有冲突，<a href="https://github.com/gajus/prepack-loader/issues/2" target="_blank" rel="noopener">issues</a>。类似的工具还有：<code>val-loader</code> and <code>babel-plugin-preval</code></p>
+<h2 id="Minifying-HTML"><a href="#Minifying-HTML" class="headerlink" title="Minifying HTML"></a>Minifying HTML</h2><blockquote>
+<p>If you consume HTML templates through your code using html-loader, you can preprocess it through posthtml with posthtml-loader. You can use posthtml-minifier to minify your HTML through it.</p>
+</blockquote>
+<h2 id="Minifying-CSS"><a href="#Minifying-CSS" class="headerlink" title="Minifying CSS"></a>Minifying CSS</h2><p><code>css-loader</code>允许通过<a href="http://cssnano.co/guides/getting-started/" target="_blank" rel="noopener">cssnano</a>来压缩css，需要通过minimize显式开启压缩功能。也可以给cssnano<a href="http://cssnano.co/optimisations/" target="_blank" rel="noopener">传参</a>来定制压缩行为。<br><code>clean-css-loader</code>允许使用css压缩工具<code>clean-css</code>.<br><code>optimize-css-assets-webpack-plugin</code>能压缩css输出。使用<code>ExtractTextPlugin</code>会导致重复的CSS,因为它只是合并text chunks。<code>optimize-css-assets-webpack-plugin</code>不会产生这个问题。</p>
+<p>在这些可选的方案中，<code>optimize-css-assets-webpack-plugin</code>比较好用，下面我们试用一下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add optimize-css-assets-webpack-plugin cssnano -D</span><br></pre></td></tr></table></figure></p>
+<p>webpack.parts.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> OptimizeCSSAssetsPlugin = <span class="built_in">require</span>(</span><br><span class="line">  <span class="string">"optimize-css-assets-webpack-plugin"</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">const</span> cssnano = <span class="built_in">require</span>(<span class="string">"cssnano"</span>);</span><br><span class="line"></span><br><span class="line">exports.minifyCSS = <span class="function">(<span class="params">&#123; options &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> OptimizeCSSAssetsPlugin(&#123;</span><br><span class="line">      cssProcessor: cssnano,</span><br><span class="line">      cssProcessorOptions: options,</span><br><span class="line">      canPrint: <span class="literal">false</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果我们要使用–json，比如<code>webpack --env production --json &gt; stats.json</code>,需要设置<code>canPrint:false</code>。<br>webpack.config.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> productionConfig = merge([</span><br><span class="line">  ...</span><br><span class="line">  parts.minifyJavaScript(),</span><br><span class="line"></span><br><span class="line">  parts.minifyCSS(&#123;</span><br><span class="line">    options: &#123;</span><br><span class="line">      discardComments: &#123;</span><br><span class="line">        removeAll: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// Run cssnano in safe mode to avoid</span></span><br><span class="line">      <span class="comment">// potentially unsafe transformations.</span></span><br><span class="line">      safe: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;),</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">]);</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>配置前</th>
+<th style="text-align:center">配置后</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/2018/05/04/surviveJS-webpack-optimizing/minifycss1.png" alt=""></td>
+<td style="text-align:center"><img src="/2018/05/04/surviveJS-webpack-optimizing/minifycss2.png" alt=""></td>
+<td>两个body样式合并到了一起</td>
+</tr>
+<tr>
+<td><img src="/2018/05/04/surviveJS-webpack-optimizing/minifycss3.png" alt=""></td>
+<td style="text-align:center"><img src="/2018/05/04/surviveJS-webpack-optimizing/minifycss4.png" alt=""></td>
+<td>css文件缩小了</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Minifying-Images"><a href="#Minifying-Images" class="headerlink" title="Minifying Images"></a>Minifying Images</h2><blockquote>
+<p>Image size can be reduced by using img-loader, imagemin-webpack, and imagemin-webpack-plugin. The packages use image optimizers underneath.</p>
+</blockquote>
+<blockquote>
+<p>It can be a good idea to use cache-loader and thread-loader with these as discussed in the Performance chapter given they can be substantial operations.</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/surviveJS-webpack-building/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -458,7 +665,7 @@
 <h3 id="Defining-a-Split-Point-Using-a-Dynamic-import"><a href="#Defining-a-Split-Point-Using-a-Dynamic-import" class="headerlink" title="Defining a Split Point Using a Dynamic import"></a>Defining a Split Point Using a Dynamic import</h3><p>我们先定义一个需要懒加载的文件，然后将加载操作绑定在按钮点击上，点击按钮加载文件内容，覆盖原始button内容。<br>src/lazy.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="string">"Hello from lazy"</span>;</span><br></pre></td></tr></table></figure></p>
 <p>src/component.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (text = <span class="string">"Hello world"</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> element = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line"></span><br><span class="line">  element.className = <span class="string">"pure-button"</span>;</span><br><span class="line">  element.innerHTML = text;</span><br><span class="line"></span><br><span class="line">  element.onclick = <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">    <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "lazy" */</span><span class="string">"./lazy"</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">lazy</span> =&gt;</span> &#123;</span><br><span class="line">        element.textContent = lazy.default;</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>运行代码，当点击div时，会看到network里请求了lazy.js。如果希望统一调整生成的chunk名字，可以设置<code>output.chunkFilename</code>,如设置为chunk.[id].js，lazy.js就会打包为chunk.0.js.<br>我们再<code>yarn run prod</code>看下打包的文件：<br><img src="/2018/05/02/surviveJS-webpack-building/codesplit.png" alt=""><br>我们可以看一下生成的lazy.js中的内容，webpack用webpackJsonp将源代码包裹了起来。<br><img src="/2018/05/02/surviveJS-webpack-building/codesplit2.png" alt=""></p>
-<h2 id="Code-Splitting-in-React"><a href="#Code-Splitting-in-React" class="headerlink" title="Code Splitting in React"></a>Code Splitting in React</h2><p>我们也可以在react 组件中使用动态引入。相关loader：<a href="https://www.npmjs.com/package/react-async-component" target="_blank" rel="noopener">react-async-component</a>,<a href="https://www.npmjs.com/package/loadable-components" target="_blank" rel="noopener">loadable-components</a><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Somewhere in code</span></span><br><span class="line">&lt;AsyncComponent loader=&#123;() =&gt; <span class="keyword">import</span>(<span class="string">"./SomeComponent"</span>)&#125; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AsyncComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.state = &#123; <span class="attr">Component</span>: <span class="literal">null</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.loader().then(</span><br><span class="line">      Component =&gt; <span class="keyword">this</span>.setState(&#123; Component &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; Component &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">    <span class="keyword">const</span> &#123; Placeholder, ...props &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Component ? &lt;Component &#123;...props&#125; /&gt; : &lt;Placeholder /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">AsyncComponent.propTypes = &#123;</span><br><span class="line">  loader: PropTypes.func.isRequired,</span><br><span class="line">  Placeholder: PropTypes.node.isRequired,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Code-Splitting-in-React"><a href="#Code-Splitting-in-React" class="headerlink" title="Code Splitting in React"></a>Code Splitting in React</h2><p>我们也可以在react 组件中使用动态引入。相关loader：<a href="https://www.npmjs.com/package/react-async-component" target="_blank" rel="noopener">react-async-component</a>,<a href="https://www.npmjs.com/package/loadable-components" target="_blank" rel="noopener">loadable-components</a><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Somewhere in code</span></span><br><span class="line">&lt;AsyncComponent loader=&#123;() =&gt; <span class="keyword">import</span>(<span class="string">"./SomeComponent"</span>)&#125; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AsyncComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.state = &#123; <span class="attr">Component</span>: <span class="literal">null</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.loader().then(</span><br><span class="line">      Component =&gt; <span class="keyword">this</span>.setState(&#123; Component &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; Component &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">    <span class="keyword">const</span> &#123; Placeholder, ...props &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Component ? <span class="xml"><span class="tag">&lt;<span class="name">Component</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span> : <span class="tag">&lt;<span class="name">Placeholder</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">AsyncComponent.propTypes = &#123;</span></span><br><span class="line"><span class="xml">  loader: PropTypes.func.isRequired,</span></span><br><span class="line"><span class="xml">  Placeholder: PropTypes.node.isRequired,</span></span><br><span class="line"><span class="xml">&#125;;</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="Disabling-Code-Splitting"><a href="#Disabling-Code-Splitting" class="headerlink" title="Disabling Code Splitting"></a>Disabling Code Splitting</h2><p>虽然代码分隔是个很好的方法，但并不总是正确的，尤其是在服务端使用时。我们可以这样通过下面的方式禁用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.optimize.LimitChunkCountPlugin(&#123;</span><br><span class="line">      maxChunks: <span class="number">1</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <h2 id="conclusion-2"><a href="#conclusion-2" class="headerlink" title="conclusion"></a>conclusion</h2><p>代码分隔可以实现按需加载，从而缩短首屏渲染时间，提升用户体验。</p>
 <ul>
@@ -2015,224 +2222,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/23/start-hexo-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ailsa">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ailsa's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/23/start-hexo-blog/" itemprop="url">HEXO & Next to start a blog</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-23T18:05:19+08:00">2018-03-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/others/" itemprop="url" rel="index"><span itemprop="name">others</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/23/start-hexo-blog/" class="leancloud_visitors" data-flag-title="HEXO & Next to start a blog">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Views:</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>开始搭建博客前，请安装好git，yarn或者npm工具。</p>
-<h2 id="本地博客搭建"><a href="#本地博客搭建" class="headerlink" title="本地博客搭建"></a>本地博客搭建</h2><h3 id="创建博客目录"><a href="#创建博客目录" class="headerlink" title="创建博客目录"></a>创建博客目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir blogName</span><br><span class="line">cd blogName</span><br></pre></td></tr></table></figure>
-<h3 id="安装hexo及其依赖"><a href="#安装hexo及其依赖" class="headerlink" title="安装hexo及其依赖"></a>安装hexo及其依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn global add hexo</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>本地博客搭建完成，现在可以通过控制台的提示访问自己的博客哒。</p>
-<h2 id="关联本地博客和github"><a href="#关联本地博客和github" class="headerlink" title="关联本地博客和github"></a>关联本地博客和github</h2><p>新建仓库名为 “github账号.github.io”</p>
-<h3 id="在hexo配置文件中关联github仓库地址"><a href="#在hexo配置文件中关联github仓库地址" class="headerlink" title="在hexo配置文件中关联github仓库地址"></a>在hexo配置文件中关联github仓库地址</h3><p>编辑_config.yml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/xxx/xxx.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
-<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add hexo-deployer-git</span><br></pre></td></tr></table></figure>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>现在博客就部署好啦，可以通过<a href="https://github账号.github.io/" target="_blank" rel="noopener">https://github账号.github.io/</a> 访问自己的博客页面。</p>
-<h2 id="Next主题安装"><a href="#Next主题安装" class="headerlink" title="Next主题安装"></a>Next主题安装</h2><h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd blogName</span><br><span class="line">git clone https://github.com/theme-next/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
-<h3 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h3><p>编辑blogName/_config.yml文件，将theme字段改为next<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure></p>
-<p>编辑blogName/themes/next/_config.yml, 会看到有几行scheme的配置, 删除你想要的主题前的#号，就可以启用该主题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: Muse</span><br><span class="line">scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">#scheme: Gemini</span><br></pre></td></tr></table></figure></p>
-<h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><p>编辑blogName/_config.yml，设置language: zh-Hans为汉字, en为英语。</p>
-<h3 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h3><p>编辑blogName/themes/next/_config.yml, 设置avatar字段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line"># in theme directory(source/images): /images/avatar.gif</span><br><span class="line"># in site  directory(source/uploads): /uploads/avatar.gif</span><br><span class="line">avatar: /images/avatar.png</span><br></pre></td></tr></table></figure></p>
-<p>注释都有很清晰的说明，如果放在source/uploads（可能需要自己建）下,使用/uploads/filename引入；如果放在source/images下，使用/images/filename引入；也可以直接使用完整的互联网URI。</p>
-<h3 id="设置作者昵称-amp-站点描述"><a href="#设置作者昵称-amp-站点描述" class="headerlink" title="设置作者昵称&amp;站点描述"></a>设置作者昵称&amp;站点描述</h3><p>编辑blogName/_config.yml, author字段设置昵称，description字段为站点描述。</p>
-<h3 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h3><h4 id="设置菜单内容"><a href="#设置菜单内容" class="headerlink" title="设置菜单内容"></a>设置菜单内容</h4><p>编辑blogName/themes/next/_config.yml的menu字段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  #about: /2018/03/23/hello-world/ || user</span><br><span class="line">  #tags: /tags/ || tags</span><br><span class="line">  #categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure></p>
-<h4 id="设置菜单显示文本-amp-显示图标"><a href="#设置菜单显示文本-amp-显示图标" class="headerlink" title="设置菜单显示文本&amp;显示图标"></a>设置菜单显示文本&amp;显示图标</h4><p>进入blogName/themes/next/languages下找到你的语言对应的配置文件，即可更改显示文本<br>编辑blogName/themes/next/_config.yml的menu_icons字段可以控制显示图标，icon name 是 Font Awesome 图标的名字。</p>
-<h2 id="集成常用第三方服务"><a href="#集成常用第三方服务" class="headerlink" title="集成常用第三方服务"></a>集成常用第三方服务</h2><h3 id="百度统计"><a href="#百度统计" class="headerlink" title="百度统计"></a>百度统计</h3><ol>
-<li>登录<a href="https://tongji.baidu.com/web/25355866/welcome/login" target="_blank" rel="noopener">百度统计</a>,选择网站统计&gt;管理&gt;新增网站&gt;输入博客域名和地址<br><img src="/2018/03/23/start-hexo-blog/baidu_analytic.png" alt=""></li>
-<li>进入代码获取&gt;代码管理页面，复制代码框中hm.src字段对应的网址?后的id<br><img src="/2018/03/23/start-hexo-blog/analytic_id.png" alt=""></li>
-<li>编辑blogName/themes/next/_config.yml文件的baidu_analytics字段为刚刚复制的id</li>
-<li>20分钟后脚本生效，便可登录查看你的博客的访问pv,uv了。</li>
-</ol>
-<h3 id="博客阅读次数统计"><a href="#博客阅读次数统计" class="headerlink" title="博客阅读次数统计"></a>博客阅读次数统计</h3><ol>
-<li>配置<a href="https://leancloud.cn/" target="_blank" rel="noopener">LeanCloud</a></li>
-<li>选择应用，创建新应用&gt;输入应用名称&gt;点击创建<br><img src="/2018/03/23/start-hexo-blog/lean_new_apply.png" alt=""></li>
-<li>点击已创建的应用，进入数据页面&gt;创建class&gt;输入Class名称为Counter&gt;选择无限制&gt;点击创建class，就可以看到Counter表了<br><img src="/2018/03/23/start-hexo-blog/lean_new_class.png" alt=""></li>
-<li>选择设置&gt;应用key&gt;复制appid&amp;appKey<br><img src="/2018/03/23/start-hexo-blog/lean_get_appid.png" alt=""></li>
-<li><p>编辑blogName/themes/next/_config.yml, 将enable设为true，黏贴复制的appid和appkey</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Show number of visitors to each article.</span><br><span class="line"># You can visit https://leancloud.cn get AppID and AppKey.</span><br><span class="line">leancloud_visitors:</span><br><span class="line">  enable: true</span><br><span class="line">  app_id: appid</span><br><span class="line">  app_key: appkey</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>web安全<br>进入web安全中心，在web安全域名中输入我们的博客域名以确保数据调用安全。<br><img src="/2018/03/23/start-hexo-blog/lean_safe.png" alt=""><br>如果安全域名填写错误，并不是我们的博客地址，打开博客页面的控制台可以看到403的报错信息。</p>
-</li>
-</ol>
-<h2 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h2><ol>
-<li><p>create new post</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;My New Post&quot; </span><br><span class="line">hexo new test // 创建test.md同时创建test文件夹</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>清楚缓存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编译文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动本地服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br><span class="line">hexo s</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署到git</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
-<li><p>在web安全中心设置完域名后，页面白屏<br>可以检查下域名后面是否写了/，比如<a href="http://www.baidu.com写成了http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com写成了http://www.baidu.com/</a></p>
-</li>
-<li><p>hexo在本地引入图片失败<br>编辑blogName/_config.yml,设置post_asset_folder:true<br>安装插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add https://github.com/CodeFalling/hexo-asset-image</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更换主题后，重新运行本地服务，主题没有生效<br>可以运行hexo clean来清除下缓存</p>
-</li>
-</ol>
-<h2 id="参考博文"><a href="#参考博文" class="headerlink" title="参考博文"></a>参考博文</h2><p><a href="https://notes.wanghao.work/2015-10-21-%E4%B8%BANexT%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD.html#%E9%85%8D%E7%BD%AELeanCloud" target="_blank" rel="noopener">leanCloud</a><br><a href="http://theme-next.iissnan.com/getting-started.html#select-scheme" target="_blank" rel="noopener">开始使用Next</a><br><a href="http://juanha.coding.me/2016/10/21/hexo-blog-build/" target="_blank" rel="noopener">搭建个人博客</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2277,7 +2273,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
